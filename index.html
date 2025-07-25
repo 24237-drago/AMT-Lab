@@ -63,9 +63,7 @@
 
     .ratio-img {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 90px;
+      width: 270px; /* 放大3倍 */
       height: auto;
       transform: translate(-50%, -50%);
       transition: opacity 1s ease;
@@ -180,28 +178,37 @@
     <button onclick="triggerEffect(this)">Launch</button>
   </div>
 
-  <script>
-    function triggerEffect(button) {
-      const imageNames = ["4b", "2b", "1b", "1-2b", "1-4b", "1-8b"];
-      const randomName = imageNames[Math.floor(Math.random() * imageNames.length)];
-      const imagePath = `assets/ratios/${randomName}.png`;
+<script>
+  function triggerEffect(button, event) {
+    const imageNames = ["4b", "2b", "1b", "1-2b", "1-4b", "1-8b"];
+    const randomName = imageNames[Math.floor(Math.random() * imageNames.length)];
+    const imagePath = `assets/ratios/${randomName}.png`;
 
-      const img = document.createElement("img");
-      img.src = imagePath;
-      img.alt = randomName;
-      img.className = "ratio-img";
+    const img = document.createElement("img");
+    img.src = imagePath;
+    img.alt = randomName;
+    img.className = "ratio-img";
 
-      button.appendChild(img);
+    // 设置位置为鼠标尖头位置
+    img.style.left = `${event.clientX}px`;
+    img.style.top = `${event.clientY}px`;
 
-      setTimeout(() => {
-        img.classList.add("fade-out");
-      }, 100);
+    document.body.appendChild(img); // 不再插到 button 内
 
-      setTimeout(() => {
-        window.location.href = "target.html";
-      }, 1100);
-    }
-  </script>
+    setTimeout(() => {
+      img.classList.add("fade-out");
+    }, 100);
+
+    setTimeout(() => {
+      window.location.href = "target.html";
+    }, 1100);
+  }
+
+  // 覆盖所有按钮点击事件
+  document.querySelectorAll(".section button").forEach(button => {
+    button.addEventListener("click", (e) => triggerEffect(button, e));
+  });
+</script>
 
 </body>
 </html>
