@@ -61,19 +61,16 @@
       transform: scale(0.96);
     }
 
-    .ratio-label {
+    .ratio-img {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 1;
-      pointer-events: none;
+      top: 50%;
+      left: 50%;
+      width: 90px;
+      height: auto;
+      transform: translate(-50%, -50%);
       transition: opacity 1s ease;
+      pointer-events: none;
+      z-index: 10;
     }
 
     .fade-out {
@@ -83,6 +80,7 @@
 </head>
 <body>
 
+  <!-- 11 sections -->
   <div class="section">
     <img src="icon.png" alt="Image" />
     <div class="description">
@@ -184,16 +182,19 @@
 
   <script>
     function triggerEffect(button) {
-      const ratios = ["4/16", "4/8", "4/4", "4/2", "4/1", "8/1", "16/1"];
-      const randomRatio = ratios[Math.floor(Math.random() * ratios.length)];
+      const imageNames = ["4b", "2b", "1b", "1-2b", "1-4b", "1-8b"];
+      const randomName = imageNames[Math.floor(Math.random() * imageNames.length)];
+      const imagePath = `assets/ratios/${randomName}.png`;
 
-      const label = document.createElement("div");
-      label.classList.add("ratio-label");
-      label.textContent = randomRatio;
-      button.appendChild(label);
+      const img = document.createElement("img");
+      img.src = imagePath;
+      img.alt = randomName;
+      img.className = "ratio-img";
+
+      button.appendChild(img);
 
       setTimeout(() => {
-        label.classList.add("fade-out");
+        img.classList.add("fade-out");
       }, 100);
 
       setTimeout(() => {
